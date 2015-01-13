@@ -1,4 +1,9 @@
-package MazeSolver;
+package consoleInterface;
+
+import mazeSolver.Coordinate;
+import mazeSolver.Maze;
+import mazeSolver.Navigator;
+import mazeSolver.Space;
 
 public class ConsoleInterface {
 

@@ -1,12 +1,12 @@
-package Tests;
+package tests;
 
 import java.util.ArrayList;
+import mazeSolver.Coordinate;
+import mazeSolver.Maze;
+import mazeSolver.Navigator;
+import mazeSolver.Space;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import MazeSolver.Coordinate;
-import MazeSolver.Maze;
-import MazeSolver.Navigator;
-import MazeSolver.Space;
 
 public class NavigatorTest {
 	

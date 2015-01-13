@@ -1,12 +1,11 @@
-package Tests;
-import java.util.ArrayList;
+package tests;
 
+import java.util.ArrayList;
+import mazeSolver.Coordinate;
+import mazeSolver.Maze;
+import mazeSolver.Space;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import MazeSolver.Coordinate;
-import MazeSolver.Maze;
-import MazeSolver.Space;
 
 public class MazeTest {
 

@@ -1,4 +1,5 @@
-package MazeSolver;
+package mazeSolver;
+
 import java.util.ArrayList;
 
 

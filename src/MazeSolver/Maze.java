@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Maze {
 	
-	private Space[][] grid = new Space[5][4];
+	private Space[][] grid = null;
 	
 	public Maze(Space[][] grid){
 
@@ -14,27 +14,24 @@ public class Maze {
 	
 	public ArrayList<Coordinate> getAdjacentOpenSpaces(Coordinate location){
 
-		int x = location.getX();
-		int y = location.getY();
+		int[][] adjacentSpaces = findAdjacentSpaces(location);
 		
-		int[][] Locations = { 
-				{ x-1 , y   },
-				{ x+1 , y   },
-				{ x   , y-1 },
-				{ x   , y+1 }
-		};
+		return findOpenSpaces(adjacentSpaces);
+		
+	}
+
+	private ArrayList<Coordinate> findOpenSpaces(int[][] Spaces) {
 		
 		ArrayList<Coordinate> openSpaces = new ArrayList<Coordinate>();
 		
-		
-		for (int i = 0; i < Locations.length; i++) {
+		for (int i = 0; i < Spaces.length; i++) {
 				
-			int xLocation = Locations[i][0];
-			int yLocation = Locations[i][1];
+			int x = Spaces[i][0];
+			int y = Spaces[i][1];
 			
 				try {
-					if( this.grid[xLocation][yLocation] == Space.OPEN ){
-						openSpaces.add( new Coordinate( xLocation, yLocation ) );
+					if( this.grid[x][y] == Space.OPEN ){
+						openSpaces.add( new Coordinate( x, y ) );
 					}
 				} catch (ArrayIndexOutOfBoundsException e) {
 					// Outside of grid - Don't Add
@@ -42,9 +39,20 @@ public class Maze {
 					e.printStackTrace();
 				}	
 		}
-		
-		
+
 		return openSpaces;
+	}
+
+	private int[][] findAdjacentSpaces(Coordinate location) {
+		int x = location.getX();
+		int y = location.getY();
 		
+		int[][] adjacentSpaces = { 
+				{ x-1 , y   },
+				{ x+1 , y   },
+				{ x   , y-1 },
+				{ x   , y+1 }
+		};
+		return adjacentSpaces;
 	}
 }

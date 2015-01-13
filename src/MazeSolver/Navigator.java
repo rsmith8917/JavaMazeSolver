@@ -25,9 +25,11 @@ public class Navigator {
 		this.numberOfVisits.put(initialLocation, 1);
 	}
 	
+	// Move to next position as specified in Tremaux's algorithm
 	public void Move(){
 		
 		this.openSpaces = maze.getAdjacentOpenSpaces(this.position);
+		
 		this.visits = new ArrayList<Integer>();
 		
 		findVisitsPerOpenSpace();
@@ -40,6 +42,9 @@ public class Navigator {
 		
 	}
 	
+	// Increment the value in the numberOfVisits HashMap to 
+	// keep track of the number of times the current position
+	// was visited.
 	private int incrementCurrentPositionVisits() {
 		int prevNumberOfVisits = 0;
 		
@@ -51,6 +56,7 @@ public class Navigator {
 		return currentPositionNumberOfVisits;
 	}
 	
+	// Find the index of the open space with the min number of visits
 	private Integer findMinVisitIndex() {
 		ArrayList<Integer> minVisitIndices = new ArrayList<Integer>();
 		
@@ -66,6 +72,7 @@ public class Navigator {
 		return minVisitIndex;
 	}
 	
+	// Find the number of visits for each open space
 	private void findVisitsPerOpenSpace() {
 		
 		for (int i = 0; i < this.openSpaces.size(); i++) {

@@ -9,6 +9,8 @@ public class Navigator {
 	private Coordinate position;
 	private Maze maze;
 	private HashMap<Coordinate, Integer> numberOfVisits = new HashMap<Coordinate, Integer>();
+	private ArrayList<Coordinate> openSpaces;
+	private ArrayList<Integer> visits;
 	public Coordinate getPosition() {
 		return position;
 	}
@@ -25,12 +27,50 @@ public class Navigator {
 	
 	public void Move(){
 		
-		ArrayList<Coordinate> openSpaces = maze.getAdjacentOpenSpaces(this.position);
-		ArrayList<Integer> visits = new ArrayList<Integer>();
+		this.openSpaces = maze.getAdjacentOpenSpaces(this.position);
+		this.visits = new ArrayList<Integer>();
 		
-		for (int i = 0; i < openSpaces.size(); i++) {
+		findVisitsPerOpenSpace();
+
+		Integer minVisitIndex = findMinVisitIndex();
+		
+		this.position = this.openSpaces.get(minVisitIndex);
+		
+		this.numberOfVisits.put(this.position, incrementCurrentPositionVisits());
+		
+	}
+	
+	private int incrementCurrentPositionVisits() {
+		int prevNumberOfVisits = 0;
+		
+		if ( this.numberOfVisits.get(this.position) != null ){
+			prevNumberOfVisits = this.numberOfVisits.get(this.position);
+		}
+		
+		int currentPositionNumberOfVisits = prevNumberOfVisits+1;
+		return currentPositionNumberOfVisits;
+	}
+	
+	private Integer findMinVisitIndex() {
+		ArrayList<Integer> minVisitIndices = new ArrayList<Integer>();
+		
+		int minNumberOfVisits = Collections.min(this.visits);
+		
+		for (int i = 0; i < this.visits.size(); i++) {
+			if ( this.visits.get(i) == minNumberOfVisits ){
+				minVisitIndices.add(i);
+			}
+		}
+		
+		Integer minVisitIndex = minVisitIndices.get((int)Math.round((minVisitIndices.size()-1)*Math.random()));
+		return minVisitIndex;
+	}
+	
+	private void findVisitsPerOpenSpace() {
+		
+		for (int i = 0; i < this.openSpaces.size(); i++) {
 			
-			Coordinate openSpace = openSpaces.get(i);
+			Coordinate openSpace = this.openSpaces.get(i);
 			
 			Integer visitCount = this.numberOfVisits.get(openSpace);
 			
@@ -38,29 +78,8 @@ public class Navigator {
 				visitCount = 0;
 			}
 			
-			visits.add(visitCount);
+			this.visits.add(visitCount);
 		}
-		
-		ArrayList<Integer> minVisitIndices = new ArrayList<Integer>();
-		
-		int minNumberOfVisits = Collections.min(visits);
-		
-		for (int i = 0; i < visits.size(); i++) {
-			if ( visits.get(i) == minNumberOfVisits ){
-				minVisitIndices.add(i);
-			}
-		}
-		
-		this.position = openSpaces.get(minVisitIndices.get((int)Math.round((minVisitIndices.size()-1)*Math.random())));
-		
-		
-		int prevNumberOfVisits = 0;
-		
-		if ( this.numberOfVisits.get(this.position) != null ){
-			prevNumberOfVisits = this.numberOfVisits.get(this.position);
-		}
-		
-		this.numberOfVisits.put(this.position, prevNumberOfVisits+1);
 		
 	}
 

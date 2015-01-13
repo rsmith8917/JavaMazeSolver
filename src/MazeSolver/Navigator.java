@@ -6,21 +6,15 @@ import java.util.HashMap;
 
 public class Navigator {
 
-	
 	private Coordinate position;
-	
 	private Maze maze;
-	
 	private HashMap<Coordinate, Integer> numberOfVisits = new HashMap<Coordinate, Integer>();
-	
 	public Coordinate getPosition() {
 		return position;
 	}
-
 	public void setPosition(Coordinate position) {
 		this.position = position;
 	}
-	
 	
 	
 	public Navigator(Maze maze, Coordinate initialLocation){

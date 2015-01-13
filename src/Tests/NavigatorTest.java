@@ -1,12 +1,8 @@
 package Tests;
 
 import java.util.ArrayList;
-
-import junit.framework.JUnit4TestAdapter;
-
 import org.junit.BeforeClass;
 import org.junit.Test;
-
 import MazeSolver.Coordinate;
 import MazeSolver.Maze;
 import MazeSolver.Navigator;

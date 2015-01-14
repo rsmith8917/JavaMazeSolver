@@ -54,6 +54,7 @@ public class Maze {
 				{ x   , y-1 },
 				{ x   , y+1 }
 		};
+		
 		return adjacentSpaces;
 	}
 }

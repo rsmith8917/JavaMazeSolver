@@ -69,7 +69,21 @@ public class Navigator {
 			}
 		}
 		
-		Integer minVisitIndex = minVisitIndices.get((int)Math.round((minVisitIndices.size()-1)*Math.random()));
+		// Select from min visit indices in this order: Down, Right, Left, Up
+		Integer minVisitIndex = 0;
+		int score = -100;
+		
+		for (int i = 0; i < minVisitIndices.size(); i++) {
+			Coordinate c = this.openSpaces.get(minVisitIndices.get(i));
+			
+			int newScore = -2*(this.position.getX() - c.getX()) + 1*(c.getY() - this.position.getY());
+			if ( newScore > score ){
+				score = newScore;
+				minVisitIndex = minVisitIndices.get(i);
+			}
+		}
+		
+		// Integer minVisitIndex = minVisitIndices.get((int)Math.round((minVisitIndices.size()-1)*Math.random()));
 		return minVisitIndex;
 	}
 	

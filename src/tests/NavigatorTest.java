@@ -1,10 +1,14 @@
 package tests;
 
 import java.util.ArrayList;
+
 import mazeSolver.Coordinate;
+import mazeSolver.DownRightLeftUpMoveStrategy;
+import mazeSolver.IMoveStrategy;
 import mazeSolver.Maze;
 import mazeSolver.Navigator;
 import mazeSolver.Space;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -44,7 +48,9 @@ public class NavigatorTest {
 		
 		Coordinate initialLocation = new Coordinate( 1, 0 );
 		
-		nav = new Navigator(maze, initialLocation);
+		IMoveStrategy moveStrategy = new DownRightLeftUpMoveStrategy();
+		
+		nav = new Navigator(maze, initialLocation, moveStrategy);
 		
 	}
 

@@ -1,7 +1,6 @@
 package mazeSolver;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 
 
@@ -12,19 +11,32 @@ public class Navigator {
 	private HashMap<Coordinate, Integer> numberOfVisits = new HashMap<Coordinate, Integer>();
 	private ArrayList<Coordinate> openSpaces;
 	private ArrayList<Integer> visits;
+	private IMoveStrategy moveStrategy;
+	
+	private MazeSpaces mazeSpaces = new MazeSpaces();
+	
 	public Coordinate getPosition() {
 		return position;
 	}
 	public void setPosition(Coordinate position) {
 		this.position = position;
 	}
-	
-	
-	public Navigator(Maze maze, Coordinate initialLocation){
+	public HashMap<Coordinate, Integer> getNumberOfVisits() {
+		return numberOfVisits;
+	}
+	public ArrayList<Coordinate> getOpenSpaces() {
+		return openSpaces;
+	}
+	public ArrayList<Integer> getVisits() {
+		return visits;
+	}
+	public Navigator(Maze maze, Coordinate initialLocation, IMoveStrategy moveStrategy){
 		this.maze = maze;
 		this.position = initialLocation;
 		this.numberOfVisits.put(initialLocation, 1);
+		this.moveStrategy = moveStrategy;
 	}
+	
 	
 	// Move to next position as specified in Tremaux's algorithm
 	public void Move(){
@@ -35,9 +47,9 @@ public class Navigator {
 		
 		findVisitsPerOpenSpace();
 
-		Integer minVisitIndex = findMinVisitIndex();
+		Integer nextPositionIndex = moveStrategy.findNextPositionIndex(this);
 		
-		this.position = this.openSpaces.get(minVisitIndex);
+		this.position = this.openSpaces.get(nextPositionIndex);
 		
 		this.numberOfVisits.put(this.position, incrementCurrentPositionVisits());
 		
@@ -57,35 +69,6 @@ public class Navigator {
 		return currentPositionNumberOfVisits;
 	}
 	
-	// Find the index of the open space with the min number of visits
-	private Integer findMinVisitIndex() {
-		ArrayList<Integer> minVisitIndices = new ArrayList<Integer>();
-		
-		int minNumberOfVisits = Collections.min(this.visits);
-		
-		for (int i = 0; i < this.visits.size(); i++) {
-			if ( this.visits.get(i) == minNumberOfVisits ){
-				minVisitIndices.add(i);
-			}
-		}
-		
-		// Select from min visit indices in this order: Down, Right, Left, Up
-		Integer minVisitIndex = 0;
-		int score = -100;
-		
-		for (int i = 0; i < minVisitIndices.size(); i++) {
-			Coordinate c = this.openSpaces.get(minVisitIndices.get(i));
-			
-			int newScore = -2*(this.position.getX() - c.getX()) + 1*(c.getY() - this.position.getY());
-			if ( newScore > score ){
-				score = newScore;
-				minVisitIndex = minVisitIndices.get(i);
-			}
-		}
-		
-		// Integer minVisitIndex = minVisitIndices.get((int)Math.round((minVisitIndices.size()-1)*Math.random()));
-		return minVisitIndex;
-	}
 	
 	// Find the number of visits for each open space
 	private void findVisitsPerOpenSpace() {

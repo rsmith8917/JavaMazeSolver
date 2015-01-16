@@ -1,6 +1,8 @@
 package consoleInterface;
 
 import mazeSolver.Coordinate;
+import mazeSolver.DownRightLeftUpMoveStrategy;
+import mazeSolver.IMoveStrategy;
 import mazeSolver.Maze;
 import mazeSolver.Navigator;
 import mazeSolver.Space;
@@ -36,7 +38,9 @@ public class ConsoleInterface {
 		
 		Coordinate initialLocation = new Coordinate( 1, 0 );
 		
-		Navigator navigator = new Navigator(maze, initialLocation);
+		IMoveStrategy moveStrategy = new DownRightLeftUpMoveStrategy();
+		
+		Navigator navigator = new Navigator(maze, initialLocation, moveStrategy);
 		
 		for (int i = 0; i < 6; i++) {
 			

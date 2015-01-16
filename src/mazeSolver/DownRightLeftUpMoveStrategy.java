@@ -6,13 +6,13 @@ import java.util.Collections;
 public class DownRightLeftUpMoveStrategy implements IMoveStrategy{
 
 	// Find the index of the open space with the min number of visits
-	public Integer findNextPositionIndex(Navigator navigator) {
+	public Integer findNextPositionIndex(MazeSpaces mazeSpaces, Coordinate currentPosition) {
 		ArrayList<Integer> minVisitIndices = new ArrayList<Integer>();
 		
-		int minNumberOfVisits = Collections.min(navigator.getVisits());
+		int minNumberOfVisits = Collections.min(mazeSpaces.getVisits());
 		
-		for (int i = 0; i < navigator.getVisits().size(); i++) {
-			if ( navigator.getVisits().get(i) == minNumberOfVisits ){
+		for (int i = 0; i < mazeSpaces.getVisits().size(); i++) {
+			if ( mazeSpaces.getVisits().get(i) == minNumberOfVisits ){
 				minVisitIndices.add(i);
 			}
 		}
@@ -22,9 +22,9 @@ public class DownRightLeftUpMoveStrategy implements IMoveStrategy{
 		int score = -100;
 		
 		for (int i = 0; i < minVisitIndices.size(); i++) {
-			Coordinate c = navigator.getOpenSpaces().get(minVisitIndices.get(i));
+			Coordinate c = mazeSpaces.getOpenSpace(minVisitIndices.get(i));
 			
-			int newScore = -2*(navigator.getPosition().getX() - c.getX()) + 1*(c.getY() - navigator.getPosition().getY());
+			int newScore = -2*(currentPosition.getX() - c.getX()) + 1*(c.getY() - currentPosition.getY());
 			if ( newScore > score ){
 				score = newScore;
 				minVisitIndex = minVisitIndices.get(i);

@@ -1,16 +1,71 @@
 package mazeSolver;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class Maze {
 	
 	private Space[][] grid = null;
+	private ArrayList<Coordinate> openSpaces = new ArrayList<Coordinate>();
+	private ArrayList<Integer> visits = new ArrayList<Integer>();
+	private HashMap<Coordinate, Integer> numberOfVisits = new HashMap<Coordinate, Integer>();
 	
-	public Maze(Space[][] grid){
-
+	public ArrayList<Coordinate> getOpenSpaces() {
+		return openSpaces;
+	}
+	public ArrayList<Integer> getVisits() {
+		return visits;
+	}
+	public HashMap<Coordinate, Integer> getNumberOfVisits() {
+		return numberOfVisits;
+	}
+	
+	
+	
+	
+	public Maze(Space[][] grid, Coordinate initialLocation){
 		this.grid = grid;
+		this.numberOfVisits.put(initialLocation, 1);
+	}
+	
+	// Find the number of visits for each open space
+	public void findVisitsPerOpenSpace() {
 		
+		this.visits = new ArrayList<Integer>();
+		
+		for (int i = 0; i < this.openSpaces.size(); i++) {
+			
+			Coordinate openSpace = this.openSpaces.get(i);
+			
+			Integer visitCount = this.numberOfVisits.get(openSpace);
+			
+			if( visitCount == null ){
+				visitCount = 0;
+			}
+			
+			this.visits.add(visitCount);
+		}
+		
+	}
+	
+	public Coordinate getOpenSpace(Integer index){
+		
+		return this.openSpaces.get(index);
+		
+	}
+	
+	// Increment the value in the numberOfVisits HashMap to 
+	// keep track of the number of times the current position
+	// was visited.
+	public void incrementCurrentPositionVisits(Coordinate position) {
+		int prevNumberOfVisits = 0;
+		
+		if ( this.numberOfVisits.get(position) != null ){
+			prevNumberOfVisits = this.numberOfVisits.get(position);
+		}
+		
+		this.numberOfVisits.put(position, prevNumberOfVisits+1);
 	}
 	
 	public ArrayList<Coordinate> getAdjacentOpenSpaces(Coordinate location){
@@ -23,7 +78,7 @@ public class Maze {
 
 	private ArrayList<Coordinate> findOpenSpaces(int[][] Spaces) {
 		
-		ArrayList<Coordinate> openSpaces = new ArrayList<Coordinate>();
+		this.openSpaces = new ArrayList<Coordinate>();
 		
 		for (int i = 0; i < Spaces.length; i++) {
 				
@@ -32,7 +87,7 @@ public class Maze {
 			
 				try {
 					if( this.grid[x][y] == Space.OPEN ){
-						openSpaces.add( new Coordinate( x, y ) );
+						this.openSpaces.add( new Coordinate( x, y ) );
 					}
 				} catch (ArrayIndexOutOfBoundsException e) {
 					// Outside of grid - Don't Add
@@ -41,7 +96,7 @@ public class Maze {
 				}	
 		}
 
-		return openSpaces;
+		return this.openSpaces;
 	}
 
 	private int[][] findAdjacentSpaces(Coordinate location) {

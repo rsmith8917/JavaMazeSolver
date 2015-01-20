@@ -37,7 +37,7 @@ public class MazeTest {
 		grid[4][2] = Space.WALL;
 		grid[4][3] = Space.WALL;
 		
-		maze = new Maze(grid);
+		maze = new Maze(grid, new Coordinate(0, 0));
 	}
 
 	@Test

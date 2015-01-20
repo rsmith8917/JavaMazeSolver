@@ -2,6 +2,6 @@ package mazeSolver;
 
 public interface IMoveStrategy {
 	
-	public Integer findNextPositionIndex(MazeSpaces mazeSpaces, Coordinate currentPosition);
+	public Integer findNextPositionIndex(Maze maze, Coordinate currentPosition);
 	
 }

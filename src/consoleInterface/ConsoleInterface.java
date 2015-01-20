@@ -34,9 +34,9 @@ public class ConsoleInterface {
 		grid[4][2] = Space.WALL;
 		grid[4][3] = Space.WALL;
 		
-		Maze maze = new Maze(grid);
-		
 		Coordinate initialLocation = new Coordinate( 1, 0 );
+		
+		Maze maze = new Maze(grid, initialLocation);
 		
 		IMoveStrategy moveStrategy = new DownRightLeftUpMoveStrategy();
 		

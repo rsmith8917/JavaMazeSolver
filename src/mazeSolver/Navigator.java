@@ -4,7 +4,7 @@ public class Navigator {
 
 	private Coordinate position;
 	private IMoveStrategy moveStrategy;
-	private MazeSpaces mazeSpaces;
+	private Maze maze;
 	
 	public Coordinate getPosition() {
 		return position;
@@ -17,22 +17,22 @@ public class Navigator {
 	public Navigator(Maze maze, Coordinate initialLocation, IMoveStrategy moveStrategy){
 		this.position = initialLocation;
 		this.moveStrategy = moveStrategy;
-		this.mazeSpaces = new MazeSpaces(maze, initialLocation);
+		this.maze = maze;
 	}
 	
 	
 	// Move to next position as specified in Tremaux's algorithm
 	public void Move(){
 		
-		this.mazeSpaces.getAdjacentOpenSpaces(this.position);
+		this.maze.getAdjacentOpenSpaces(this.position);
 		
-		this.mazeSpaces.findVisitsPerOpenSpace();
+		this.maze.findVisitsPerOpenSpace();
 
-		Integer nextPositionIndex = this.moveStrategy.findNextPositionIndex(this.mazeSpaces, this.position);
+		Integer nextPositionIndex = this.moveStrategy.findNextPositionIndex(this.maze, this.position);
 		
-		this.position = this.mazeSpaces.getOpenSpace(nextPositionIndex);
+		this.position = this.maze.getOpenSpace(nextPositionIndex);
 		
-		this.mazeSpaces.incrementCurrentPositionVisits(this.position);
+		this.maze.incrementCurrentPositionVisits(this.position);
 		
 	}
 	
